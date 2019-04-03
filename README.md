@@ -1,6 +1,6 @@
 # ISI_Projects
-Author: Tong Liu  
 USC Information Sciences Institute  
+Tong Liu  
 Supervisor: Pedro Szekely  
 
 ## sparql.py
