@@ -3,23 +3,24 @@ import re
 from collections import defaultdict
 
 def get_properties(P_ID, filename):
-	sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
-	#sparql = SPARQLWrapper("http://sitaware.isi.edu:8080")
-	sparql.setTimeout(1000)
+	#sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+	sparql = SPARQLWrapper("http://sitaware.isi.edu:8080/bigdata/namespace/wdq/sparql")
+	#sparql.setTimeout(1000)
 	sparql.setQuery("""
-	    SELECT DISTINCT ?v
+	    SELECT DISTINCT ?v ?x
 		WHERE{
 	      ?x wdt:""" + P_ID + """?v .
 	      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 	    }
+	    limit 20
 	""")
 	sparql.setReturnFormat(JSON)
 	try:
 		results = sparql.query().convert()
 		res = results["results"]["bindings"]
-		f = open("./results_2.0/"+filename,"w+")
+		f = open("./results_4.0/"+filename,"w+")
 		for r in res:
-			f.write((r["v"]["value"]))
+			f.write((r["v"]["value"]+r["x"]["value"]))
 			f.write("\n")
 		f.close()
 	except:
@@ -28,9 +29,9 @@ def get_properties(P_ID, filename):
 
 def get_identifiers():
 	global id_label
-	sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
-	#sparql = SPARQLWrapper("http://sitaware.isi.edu:8080")
-	sparql.setTimeout(1000)
+	#sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+	sparql = SPARQLWrapper("http://sitaware.isi.edu:8080/bigdata/namespace/wdq/sparql")
+	#sparql.setTimeout(1000)
 	sparql.setQuery("""
 		SELECT DISTINCT ?P_ID ?P_IDLabel
 		WHERE
@@ -39,6 +40,7 @@ def get_identifiers():
 		  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 		}
 		ORDER BY DESC(?P_ID)
+		limit 20
 	""")
 	sparql.setReturnFormat(JSON)
 	results = sparql.query().convert()
