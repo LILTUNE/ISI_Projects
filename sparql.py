@@ -1,9 +1,9 @@
 from SPARQLWrapper import SPARQLWrapper, JSON,XML
-import re
-from collections import defaultdict
+import re,json
 
 def get_properties(P_ID, filename):
 	#sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+	cur_json = {}
 	sparql = SPARQLWrapper("http://sitaware.isi.edu:8080/bigdata/namespace/wdq/sparql")
 	#sparql.setTimeout(1000)
 	sparql.setQuery("""
@@ -12,19 +12,18 @@ def get_properties(P_ID, filename):
 	      ?x wdt:""" + P_ID + """?v .
 	      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 	    }
-	    limit 20
 	""")
 	sparql.setReturnFormat(JSON)
 	try:
 		results = sparql.query().convert()
-		res = results["results"]["bindings"]
-		f = open("./results_4.0/"+filename,"w+")
-		for r in res:
-			f.write((r["v"]["value"]+r["x"]["value"]))
-			f.write("\n")
-		f.close()
+		for result in results["results"]["bindings"]:
+			id = result["v"]["value"]
+			Q = re.search(r'Q[0-9]+',result["x"]["value"])
+			if Q:
+				cur_json[id] = Q.group(0)
 	except:
 		print(filename)
+	return cur_json
 
 
 def get_identifiers():
@@ -40,7 +39,6 @@ def get_identifiers():
 		  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 		}
 		ORDER BY DESC(?P_ID)
-		limit 20
 	""")
 	sparql.setReturnFormat(JSON)
 	results = sparql.query().convert()
@@ -51,9 +49,14 @@ def get_identifiers():
 			label = r["P_IDLabel"]["value"]
 			id_label[id]=label
 		except:
-			continue	
+			continue
 if __name__ == "__main__":
-	id_label = defaultdict()#get_properties("P212")
+	id_label = {}#get_properties("P212")
+	prop_idents ={}
 	get_identifiers()
 	for id,label in id_label.items():
-		get_properties(id,id+"_"+label+".txt")
+		prop_idents[id+"_"+label] = get_properties(id,id+"_"+label)
+	js = json.dumps(prop_idents)
+	f = open("prop_idents.json","w+")
+	f.write(js)
+	f.close()
