@@ -17,7 +17,7 @@ File name follows the format 'prop_idents.txt'
 2.take slice for python dict
 
 ## find_identity.py
-INPUT: a list of string i.e.['5333265','5333264','5333267','5333266','5333261','5333260','5333263','5333262']
+INPUT: a list of string i.e.['5333265','5333264','5333267','5333266','5333261','5333260','5333263','5333262']   
 OUTPUT: What peoperty are they and their possible result. 
 
 i.e.Top 1 P932
