@@ -13,7 +13,7 @@ File name follows the format 'prop_idents.txt'
   "123" : [ "P345/Q123", "P789/Q234" ],
  "453" : [ "P789/Q43", "P256/Q456", "P31/Q567" ],
   ...
-}
+}    
 2.take slice for python dict
 
 ## find_identity.py
