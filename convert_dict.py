@@ -14,3 +14,10 @@ def convert_dict(prop_idents):
                 keys.add(identi)
                 identifier_nodes_dict[identi] = set([P_number + '/' + Q_number])
     return identifier_nodes_dict
+
+def dict_slice(adict, start, end):
+    keys = adict.keys()
+    dict_slice = {}
+    for k in keys[start:end]:
+        dict_slice[k] = adict[k]
+    return dict_slice
