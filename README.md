@@ -4,8 +4,8 @@ Tong Liu
 Supervisor: Pedro Szekely  
 
 ## sparql.py
-generate all identifiers for all property, then store each property's identifers in txt files.  
-File name follow the format 'PropertyID_PropertyName.txt'
+generate all identifiers for all property, then store them in a python dictionary, then save into a file.  
+File name follows the format 'prop_idents.txt'
 
 ## minHash.py
 Build a list for all MinHash objects. Give a file, it will return the top 5 silimiar items and their similarity scores.
