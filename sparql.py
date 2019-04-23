@@ -2,16 +2,12 @@ from SPARQLWrapper import SPARQLWrapper, JSON,XML
 import re,json
 
 def get_properties(P_ID):
-	#sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+	sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
 	cur_json = {}
-	sparql = SPARQLWrapper("http://sitaware.isi.edu:8080/bigdata/namespace/wdq/sparql")
+	#sparql = SPARQLWrapper("http://sitaware.isi.edu:8080/bigdata/namespace/wdq/sparql")
 	#sparql.setTimeout(1000)
 	sparql.setQuery("""
-	    SELECT DISTINCT ?v ?x
-		WHERE{
-	      ?x wdt:""" + P_ID + """?v .
-	      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-	    }
+	    SELECT ?x ?v WHERE { ?x wdt:""" + P_ID + """ ?v. }
 	""")
 	sparql.setReturnFormat(JSON)
 	try:
@@ -28,12 +24,13 @@ def get_properties(P_ID):
 
 def get_identifiers():
 	global P_nodes
-	#sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
-	sparql = SPARQLWrapper("http://sitaware.isi.edu:8080/bigdata/namespace/wdq/sparql")
+	sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+	#sparql = SPARQLWrapper("http://sitaware.isi.edu:8080/bigdata/namespace/wdq/sparql")
 	#sparql.setTimeout(1000)
 	sparql.setQuery("""select ?p where {
 		?p wikibase:propertyType wikibase:ExternalId .
-		}""")
+		}
+		""")
 	sparql.setReturnFormat(JSON)
 	results = sparql.query().convert()
 	res = results["results"]["bindings"]
@@ -54,6 +51,6 @@ if __name__ == "__main__":
 		print(idx,P_node)
 		prop_idents[P_node] = get_properties(P_node)
 	js = json.dumps(prop_idents)
-	f = open("prop_idents_v2.json","w+")
+	f = open("prop_idents_v3.json","w+")
 	f.write(js)
 	f.close()
