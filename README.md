@@ -30,6 +30,8 @@ i.e.Top 1 P932
     '5333263': 'Q31172286', 
     '5333262': 'Q37676537'
 }
+## read_write_files.py
+read and write JSON files.
 
 ## minHash.py
 Build a list for all MinHash objects. Give a file, it will return the top 5 silimiar items and their similarity scores.
