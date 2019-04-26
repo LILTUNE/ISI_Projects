@@ -17,10 +17,10 @@ def get_properties(P_ID):
 			Q = re.search(r'Q[0-9]+',result["x"]["value"])
 			if Q:
 				Q_node = Q.group(0)
-				cur_json[value] = Q.group(0)
+				cur_json[value] = Q_node
 				if(value.isdigit() and value[0]=="0"):
 					rm_leading0 = str(int(value))
-					cur_json[rm_leading0] = Q.group(0)
+					cur_json[rm_leading0] = Q_node
 	except:
 		print('get_properties() Error:',P_ID)
 	return cur_json
