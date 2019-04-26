@@ -19,7 +19,7 @@
 ## find_identity.py
 * INPUT: a list of string i.e.['5333265','5333264','5333267','5333266','5333261','5333260','5333263','5333262']   
 * OUTPUT: What peoperty are they and their possible result. 
-'''
+
 i.e.Top 1 P932
 {   '5333265': 'Q38922747',
     '5333264': 'Q37676540', 
@@ -30,7 +30,7 @@ i.e.Top 1 P932
     '5333263': 'Q31172286', 
     '5333262': 'Q37676537'
 }
-'''
+
 ## read_write_files.py
 read and write JSON files.
 
