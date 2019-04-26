@@ -33,6 +33,9 @@ i.e.Top 1 P932
 ## read_write_files.py
 read and write JSON files.
 
+## IdentifierWikifier.ipynb
+Wikifier input csv file, output csv file
+
 ## minHash.py
 Build a list for all MinHash objects. Give a file, it will return the top 5 silimiar items and their similarity scores.
 
