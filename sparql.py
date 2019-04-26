@@ -18,7 +18,7 @@ def get_properties(P_ID):
 			if Q:
 				Q_node = Q.group(0)
 				cur_json[value] = Q_node
-				if(value.isdigit() and value[0]=="0"):
+				if(value[0]=="0" and value.isdigit()):
 					rm_leading0 = str(int(value))
 					cur_json[rm_leading0] = Q_node
 	except:
