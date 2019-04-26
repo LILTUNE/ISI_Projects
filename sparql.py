@@ -13,14 +13,17 @@ def get_properties(P_ID):
 	try:
 		results = sparql.query().convert()
 		for result in results["results"]["bindings"]:
-			id = result["v"]["value"]
+			value = result["v"]["value"]
 			Q = re.search(r'Q[0-9]+',result["x"]["value"])
 			if Q:
-				cur_json[id] = Q.group(0)
+				Q_node = Q.group(0)
+				cur_json[value] = Q.group(0)
+				if(value.isdigit() and value[0]=="0"):
+					rm_leading0 = str(int(value))
+					cur_json[rm_leading0] = Q.group(0)
 	except:
-		print(P_ID)
+		print('get_properties() Error:',P_ID)
 	return cur_json
-
 
 def get_identifiers():
 	global P_nodes
@@ -38,12 +41,9 @@ def get_identifiers():
 		try:
 			P_node = re.search(r'[A-Za-z][0-9]+',r["p"]["value"]).group()
 			P_nodes.append(P_node)
-			# label = r["P_IDLabel"]["value"]
-			# id_label[id]=label
 		except:
-			continue
+			print('get_identifiers Error()', r)
 if __name__ == "__main__":
-	id_label = {}#get_properties("P212")
 	P_nodes = []
 	prop_idents ={}
 	get_identifiers()
@@ -51,6 +51,6 @@ if __name__ == "__main__":
 		print(idx,P_node)
 		prop_idents[P_node] = get_properties(P_node)
 	js = json.dumps(prop_idents)
-	f = open("prop_idents_v3.json","w+")
+	f = open("prop_idents_v4.json","w+")
 	f.write(js)
 	f.close()
