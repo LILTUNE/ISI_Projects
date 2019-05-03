@@ -4,8 +4,7 @@ def convert_dict(prop_idents):
     keys = set()
     for P_number,p_entity in prop_idents.items():
         count += 1
-        print(P_number)
-        print(count)
+        print(P_number,count)
         for identi,Q_number in p_entity.items():
             #if identi in identifier_nodes_dict.keys():
             if identi in keys:
